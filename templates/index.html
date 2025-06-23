@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Deteksi Pneumonia - X-ray Dada</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --sage: #a3b18a;
+            --sage-dark: #588157;
+            --sage-bg: #f3f6f1;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--sage-bg);
+            color: #333;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h2 {
+            color: var(--sage-dark);
+            font-weight: 600;
+        }
+
+        .form-section {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+        }
+
+        .btn-sage {
+            background-color: var(--sage-dark);
+            color: #fff;
+            border: none;
+        }
+
+        .btn-sage:hover {
+            background-color: #3a5a40;
+        }
+
+        .card-result {
+            margin-top: 30px;
+        }
+
+        .xray-img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .badge-medical {
+            font-size: 0.9rem;
+            padding: 6px 10px;
+        }
+
+        .footer {
+            margin-top: 60px;
+            font-size: 0.85rem;
+            text-align: center;
+            color: #666;
+        }
+
+        .note {
+            font-size: 0.85rem;
+            color: #555;
+        }
+
+        .section-info {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container py-5">
+        <div class="header">
+            <h2>Deteksi Pneumonia dari Gambar X-ray Dada</h2>
+            <p class="text-muted">Aplikasi internal untuk tenaga medis | Akurasi berbasis CNN</p>
+        </div>
+
+        <div class="form-section shadow-sm">
+            <form method="POST" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="image" class="form-label"><strong>Upload Gambar X-ray Dada</strong></label>
+                    <input class="form-control" type="file" id="image" name="image" accept="image/*" required>
+                </div>
+                <div class="text-end">
+                    <button type="submit" class="btn btn-sage">Proses Gambar</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- ... (bagian awal tidak berubah) ... -->
+
+        {% if prediction %}
+        <div class="card shadow-sm card-result">
+            <div class="row g-0">
+                <div class="col-md-5">
+                    <img src="{{ prediction.image_path }}" class="xray-img" alt="X-ray Dada">
+                </div>
+                <div class="col-md-7 p-4">
+                    <h5
+                        class="mb-3 text-{{ 'success' if prediction.label == 'NORMAL' else 'danger' if prediction.label == 'PNEUMONIA' else 'secondary' }}">
+                        Hasil Analisis Citra
+                    </h5>
+
+                    <p class="mb-2"><strong>Kategori:</strong>
+                        <span
+                            class="badge bg-{{ 'success' if prediction.label == 'NORMAL' else 'danger' if prediction.label == 'PNEUMONIA' else 'secondary' }} badge-medical">
+                            {% if prediction.label == 'UNKNOWN' %}
+                            Tidak dikenali (non-paru)
+                            {% else %}
+                            {{ prediction.label }}
+                            {% endif %}
+                        </span>
+                    </p>
+
+                    <p><strong>Keyakinan Model:</strong> {{ prediction.confidence }}</p>
+                    <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar bg-success" style="width: {{ prediction.confidence[:-1] }}%;">
+                            {{ prediction.confidence }}
+                        </div>
+                    </div>
+
+                    {% if prediction.label == 'PNEUMONIA' %}
+                    <div class="section-info mt-4">
+                        <h6 class="text-danger">Karakteristik Radiologis Pneumonia:</h6>
+                        <ul>
+                            <li>Infiltrat atau konsolidasi opasitas putih di jaringan paru</li>
+                            <li>Pola lobar atau bronkopneumonia</li>
+                            <li>Bisa disertai volume loss dan air bronchogram</li>
+                        </ul>
+                    </div>
+                    {% elif prediction.label == 'NORMAL' %}
+                    <div class="section-info mt-4">
+                        <h6 class="text-success">Karakteristik Radiologis Paru Normal:</h6>
+                        <ul>
+                            <li>Lapang paru jernih, tidak terdapat infiltrat</li>
+                            <li>Kontur jantung dan diafragma normal</li>
+                            <li>Distribusi vaskular merata</li>
+                        </ul>
+                    </div>
+                    {% elif prediction.label == 'UNKNOWN' %}
+                    <div class="section-info mt-4">
+                        <h6 class="text-secondary">Gambar Tidak Dikenali sebagai X-ray Dada:</h6>
+                        <p>Silakan unggah ulang dengan gambar X-ray dada posterior-anterior (PA) yang valid.</p>
+                    </div>
+                    {% endif %}
+
+                    <p class="note mt-3">Analisis ini bersifat pendukung. Diagnosis akhir tetap ditentukan oleh dokter
+                        spesialis radiologi.</p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- ... (footer dan script tetap) ... -->
+
+
+        <div class="footer">
+            Computer Vision | &copy; 2025
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
