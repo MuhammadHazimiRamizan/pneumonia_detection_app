@@ -75,8 +75,6 @@ This project leverages deep learning techniques to automatically classify chest 
   - Automated analysis using CNN
   - Prediction confidence with progress bar
   - Radiological characteristics for interpretation
-  - Color-coded prediction badges
-  - Sage green UI for medical-friendly aesthetic
 
 ---
 
