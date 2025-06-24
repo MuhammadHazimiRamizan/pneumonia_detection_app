@@ -1,5 +1,5 @@
-Flask
-tensorflow
+Flask==2.3.2
+tensorflow==2.12.0
 numpy
-pillow
+Pillow
 gunicorn
