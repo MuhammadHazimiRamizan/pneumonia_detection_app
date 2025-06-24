@@ -92,9 +92,6 @@ This project leverages deep learning techniques to automatically classify chest 
 - Python
 - TensorFlow / Keras
 - Flask
-- Bootstrap 5
-- Jinja2
-- HTML/CSS
 - HuggingFace Spaces
 
 ---
@@ -105,29 +102,7 @@ This project leverages deep learning techniques to automatically classify chest 
    ```bash
    git clone https://github.com/your-username/chest-xray-pneumonia-cnn.git
    cd chest-xray-pneumonia-cnn
+   
    ```
-
-2. **Create and Activate a Virtual Environment**
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
-
-3. **Install Dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Run Flask App**
-   ```bash
-   python app.py
-   ```
-
-5. **Open in Browser**
-   ```
-   http://127.0.0.1:5000/
-   ```
-
----
 
 > 📌 *Note: This system is intended for medical internal use only. The model serves as a supportive tool and not as a replacement for expert radiological diagnosis.*
