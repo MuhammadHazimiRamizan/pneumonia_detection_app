@@ -69,7 +69,7 @@ This project leverages deep learning techniques to automatically classify chest 
 
 - **Backend:** Flask
 - **Deployment Platform:** HuggingFace Space  
-  [Live App](https://huggingface.co/spaces/faturbbx/football-player-detection)
+  [Live App](https://huggingface.co/spaces/jimikeren/pneumonia-detection)
 - **Features:**
   - Image upload and preview
   - Automated analysis using CNN
