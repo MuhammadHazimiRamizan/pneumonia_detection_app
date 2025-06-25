@@ -46,7 +46,7 @@ This project leverages deep learning techniques to automatically classify chest 
 
 | Parameter          | Value        |
 |--------------------|--------------|
-| Epochs             | 10           |
+| Epochs             | 25           |
 | Batch Size         | 32           |
 | Learning Rate      | 0.001        |
 | Train/Test Split   | 80/20        |
